@@ -25,7 +25,7 @@ namespace CleanArchMvc.Infra.IoC
             services.AddAutoMapper(typeof(DomainToDTO));
 
             var myHandlers = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
-            services.AddMediatR(myHandlers);
+            services.AddMediatR(p => p.RegisterServicesFromAssembly(myHandlers));
         }
     }
 }
