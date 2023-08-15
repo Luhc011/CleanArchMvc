@@ -24,15 +24,79 @@ namespace CleanArchMvc.WebUI.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryDTO category)
+        public async Task<IActionResult> Create(CategoryDTO categoryDTO)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                await _categoryService.Add(category);
+                await _categoryService.Add(categoryDTO);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(category);
+            return View(categoryDTO);
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var categoryDTO = await _categoryService.GetById(id);
+
+            if (categoryDTO == null) return NotFound();
+
+            return View(categoryDTO);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> Edit(CategoryDTO categoryDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _categoryService.Update(categoryDTO);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(categoryDTO);
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var categoryDTO = await _categoryService.GetById(id);
+
+            if (categoryDTO == null)
+                return NotFound();
+
+            return View(categoryDTO);
+        }
+
+        [HttpPost(), ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmerd(int? id)
+        {
+            await _categoryService.Remove(id);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var categoryDTO = await _categoryService.GetById(id);
+
+            if (categoryDTO == null)
+                return NotFound();
+
+            return View(categoryDTO);
         }
     }
 }
