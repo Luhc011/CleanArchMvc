@@ -27,15 +27,19 @@ namespace CleanArchMvc.Infra.Data.Repositories
 
         public async Task<Product> GetProductById(int id)
         {
-            return await _productContext.Products.FindAsync(id);
+#pragma warning disable CS8603 // Possible null reference return.
+            return await _productContext.Products
+                                .Include(c => c.Category)
+                                .SingleOrDefaultAsync(p => p.Id == id);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
-        public async Task<Product> GetProductCategoryAsync(int id)
-        {
-            return await _productContext.Products
-                .Include(c => c.Category)
-                .SingleOrDefaultAsync(p => p.Id == id);
-        }
+        //public async Task<Product> GetProductCategoryAsync(int id)
+        //{
+        //    return await _productContext.Products
+        //        .Include(c => c.Category)
+        //        .SingleOrDefaultAsync(p => p.Id == id);
+        //}
 
         public async Task<Product> Remove(Product product)
         {
