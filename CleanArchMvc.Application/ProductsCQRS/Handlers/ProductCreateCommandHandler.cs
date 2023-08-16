@@ -20,8 +20,9 @@ namespace CleanArchMvc.Application.ProductsCQRS.Handlers
                                       request.Stock, request.Image);
 
             if (product == null)
+            {
                 throw new ApplicationException($"Error creating entity");
-            
+            }
             else
             {
                 product.CategoryId = request.CategoryId;

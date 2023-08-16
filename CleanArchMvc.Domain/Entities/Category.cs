@@ -7,11 +7,11 @@ namespace CleanArchMvc.Domain.Entities
         public string? Name { get; private set; }
         public ICollection<Product>? Products { get; set; }
 
-        public Category(string? name)
+        public Category(string name)
         {
             ValidateDomain(name);
         }
-        public Category(int id, string? name)
+        public Category(int id, string name)
         {
             DomainExceptionValidation.When(id < 0, "Invalid id value");
             Id = id;

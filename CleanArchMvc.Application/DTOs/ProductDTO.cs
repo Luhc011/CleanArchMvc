@@ -8,18 +8,20 @@ namespace CleanArchMvc.Application.DTOs
     public class ProductDTO
     {
         public int Id { get; set; }
+		public Category? Category { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
+
+		[Required(ErrorMessage = "Name is required")]
         [MinLength(3)]
         [MaxLength(100)]
         [DisplayName("Name")]
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
 
         [Required(ErrorMessage = "Description is required")]
         [MinLength(5)]
         [MaxLength(200)]
         [DisplayName("Description")]
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
         [Required(ErrorMessage = "Price is required")]
         [Column(TypeName = "decimal(14,2)")]
@@ -35,9 +37,8 @@ namespace CleanArchMvc.Application.DTOs
 
         [MaxLength(250)]
         [DisplayName("Product Image")]
-        public string Image { get; private set; }
+        public string? Image { get; private set; }
 
-        public Category? Category { get; set; }
 
         [DisplayName("Categories")]
         public int CategoryId { get; set; }

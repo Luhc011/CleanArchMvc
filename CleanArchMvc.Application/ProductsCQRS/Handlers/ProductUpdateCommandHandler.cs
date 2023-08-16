@@ -19,8 +19,9 @@ namespace CleanArchMvc.Application.ProductsCQRS.Handlers
             var product = await _productRepository.GetProductById(request.Id);
 
             if (product == null)
+            {
                 throw new ApplicationException($"Error couldn't be found");
-
+            }
             else
             {
                 product.UpdateProduct(request.Name, request.Description, request.Price, request.Stock,
